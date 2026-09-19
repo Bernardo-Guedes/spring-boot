@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Estações de Rádio em ' + ${city}"></title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-slate-950 text-white">
+
+    <header class="flex py-3 px-3 items-center bg-slate-950 gap-8">
+        <div class="flex items-center ml-3">
+            <i data-lucide="audio-lines" class="text-blue-600"></i>
+            <div>
+                <h1 class="font-bold ml-2 text-lg">Próxima Estação</h1>
+            </div>
+        </div>
+
+        <div class="bg-slate-800 rounded-full flex items-center p-2 ml-8">
+            <i data-lucide="search" class="ml-1 text-sm"></i>
+            <input type="text" id="searchInput" placeholder="Pesquisar rádio, nome ou gênero..."
+                class="ml-2 w-96 bg-transparent outline-none" />
+        </div>
+
+        <div class="ml-auto flex items-center gap-6">
+            <span class="hidden sm:inline text-sm text-slate-300">
+                Olá, <span class="font-medium text-white" th:text="${username}">usuário</span>
+            </span>
+            <form th:action="@{/logout}" method="post" class="m-0">
+                <button type="submit"
+                    class="flex items-center gap-1.5 text-sm bg-slate-700 hover:bg-slate-800 cursor-pointer px-3 py-1.5 rounded-lg transition-colors">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                    Sair
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <main class="flex mr-2">
+        <aside class="px-6 py-2 min-h-full min-w-64">
+            <ul>
+                <li class="flex mb-2 align-center p-2"><i data-lucide="house"
+                        class="w-4 h-4 mt-1"></i><a th:href="@{/home}"
+                        class="font-semibold ml-2 text-base text-gray-400">Início</a></li>
+                <li class="flex mb-2 align-center rounded-md bg-blue-950 p-2 text-blue-500"><i data-lucide="star" class="w-4 h-4 mt-1"></i><a th:href="@{/favorites}"
+                        class="font-semibold ml-2 text-blue-500 text-base">Favoritas</a></li>
+            </ul>
+        </aside>
+
+        <div class="min-h-full flex-1 bg-gray-950">
+            <section class="min-w-full bg-cover bg-center min-h-80 rounded-md"
+                th:style="'background-image: url(' + @{/images/banner_bh.png} + ');'">
+                <div class="pt-8 pl-8">
+                    <h2 class="text-3xl font-extrabold">Suas rádios</h2>
+                    <h2 class="text-5xl font-bold text-blue-600">preferidas</h2>
+                    <p class="mt-5">Acesse rapidamente as rádios que você mais gosta<br>e leve sua trilha sonora para onde for</p>
+                </div>
+            </section>
+
+            <section class="min-w-full">
+                <div class="flex ml-4 mt-4 align-center">
+                    <i data-lucide="tally-1" class="text-blue-700"></i>
+                    <h2 class="text-xl font-semibold">Minhas rádios favoritas</h2>
+                </div>
+                <div class="flex p-2 justify-center gap-2 mx-4 mt-2">
+                    <div th:each="station : ${favorites}" th:if="${favorites.size() > 0}"
+                        class="rounded-md bg-cover bg-center w-40 h-40 flex flex-col justify-end p-2 text-white"
+                        th:style="'background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url(' + ${station.favicon} + ');'">
+                        <p th:text="${station.name}" class="text-xs"></p>
+                        <div class="flex justify-between">
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="circle" class="w-2 h-2 fill-red-700 text-red-700"></i>
+                                <p class="ml-1"> Ao vivo</p>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <div class="audio-container">
+                                    <audio th:src="${station.url}" class="hidden"></audio>
+                                    <button type="button" onclick="toggleAudio(this)"
+                                        class="bg-blue-600 hover:bg-blue-700 p-1 rounded-full">
+                                        <i data-lucide="play" class="w-3 h-3"></i>
+                                    </button>
+                                </div>
+
+                                <form th:action="@{/favorite/remove}" method="post" class="inline">
+                                    <input type="hidden" name="stationUuid" th:value="${station.stationuuid}">
+                                    <button type="submit" class="mt-1 cursor-pointer bg-blue-600 hover:bg-blue-700 p-1 rounded-full">
+                                        <i data-lucide="star" class="w-3 h-3 fill-white text-white"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+    <script>
+        function toggleAudio(button) {
+            const audio = button.previousElementSibling;
+            const icon = button.querySelector("svg");
+
+            if (audio.paused) {
+                audio.play();
+                icon.setAttribute("data-lucide", "pause");
+            } else {
+                audio.pause();
+                icon.setAttribute("data-lucide", "play");
+            }
+            lucide.createIcons();
+        }
+        lucide.createIcons();
+    </script>
+    <script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

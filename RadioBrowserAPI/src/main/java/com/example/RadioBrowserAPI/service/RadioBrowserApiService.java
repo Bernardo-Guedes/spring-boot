@@ -65,7 +65,7 @@ public class RadioBrowserApiService {
                 station.setHomepage((String) stationMap.get("homepage"));
                 station.setFavicon(stationMap.get("favicon") == null
                         || ((String) stationMap.get("favicon")).isEmpty()
-                        ? "imgs/aradio.webp"
+                        ? "/images/aradio.webp"
                         : (String) stationMap.get("favicon"));
                 station.setTags((String) stationMap.get("tags"));
                 station.setCountry((String) stationMap.get("country"));
@@ -101,7 +101,6 @@ public class RadioBrowserApiService {
                 radioStations.add(station);
             }
         }
-
         return radioStations;
     }
 
