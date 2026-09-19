@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Estações de Rádio em ' + ${city}"></title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="bg-slate-950 text-white">
+
+    <header class="flex py-3 px-3 items-center bg-slate-950 gap-5">
+        <div class="flex items-center ml-3">
+            <i data-lucide="audio-lines" class="text-blue-600"></i>
+            <div>
+                <h1 class="font-bold ml-2 text-lg">Próxima Estação</h1>
+                <p class="text-xs text-gray-400 ml-2" th:text="'Todas as vozes de ' + ${city}"></p>
+            </div>
+        </div>
+
+        <div class="bg-slate-800 rounded-full flex items-center p-2">
+            <i data-lucide="search" class="ml-1 text-sm"></i>
+            <input type="text" id="searchInput" placeholder="Pesquisar rádio, nome ou gênero..."
+                class="ml-2 w-96 bg-transparent outline-none" />
+        </div>
+
+        <div class="ml-auto mr-3">
+            <select name="capitais" onchange="window.location.href = this.value" class="rounded-md bg-slate-800 text-white p-2 font-medium">
+                <option value="/?country=Brazil&state=Sergipe&city=Aracaju" th:selected="${city == 'Aracaju'}">Aracaju</option>
+                <option value="/?country=Brazil&state=Roraima&city=Boa Vista" th:selected="${city == 'Boa Vista'}">Boa Vista</option>
+                <option value="/?country=Brazil&state=Minas Gerais&city=Belo Horizonte" th:selected="${city == 'Belo Horizonte'}">Belo Horizonte</option>
+                <option value="/?country=Brazil&state=Pará&city=Belém" th:selected="${city == 'Belém'}">Belém</option>
+                <option value="/?country=Brazil&state=Goiás&city=Goiânia" th:selected="${city == 'Goiânia'}">Goiânia</option>
+                <option value="/?country=Brazil&state=Paraíba&city=João Pessoa" th:selected="${city == 'João Pessoa'}">João Pessoa</option>
+                <option value="/?country=Brazil&state=Amapá&city=Macapá" th:selected="${city == 'Macapá'}">Macapá</option>
+                <option value="/?country=Brazil&state=Alagoas&city=Maceió" th:selected="${city == 'Maceió'}">Maceió</option>
+                <option value="/?country=Brazil&state=Amazonas&city=Manaus" th:selected="${city == 'Manaus'}">Manaus</option>
+                <option value="/?country=Brazil&state=Rio Grande do Norte&city=Natal" th:selected="${city == 'Natal'}">Natal</option>
+                <option value="/?country=Brazil&state=Rondônia&city=Porto Velho" th:selected="${city == 'Porto Velho'}">Porto Velho</option>
+                <option value="/?country=Brazil&state=Rio Grande do Sul&city=Porto Alegre" th:selected="${city == 'Porto Alegre'}">Porto Alegre</option>
+                <option value="/?country=Brazil&state=Pernambuco&city=Recife" th:selected="${city == 'Recife'}">Recife</option>
+                <option value="/?country=Brazil&state=Acre&city=Rio Branco" th:selected="${city == 'Rio Branco'}">Rio Branco</option>
+                <option value="/?country=Brazil&state=Rio de Janeiro&city=Rio de Janeiro" th:selected="${city == 'Rio de Janeiro'}">Rio de Janeiro</option>
+                <option value="/?country=Brazil&state=Bahia&city=Salvador" th:selected="${city == 'Salvador'}">Salvador</option>
+                <option value="/?country=Brazil&state=Maranhão&city=São Luís" th:selected="${city == 'São Luís'}">São Luís</option>
+                <option value="/?country=Brazil&state=São Paulo&city=São Paulo" th:selected="${city == 'São Paulo'}">São Paulo</option>
+                <option value="/?country=Brazil&state=Paraná&city=Curitiba" th:selected="${city == 'Curitiba'}">Curitiba</option>
+                <option value="/?country=Brazil&state=Mato Grosso&city=Cuiabá" th:selected="${city == 'Cuiabá'}">Cuiabá</option>
+                <option value="/?country=Brazil&state=Mato Grosso do Sul&city=Campo Grande" th:selected="${city == 'Campo Grande'}">Campo Grande</option>
+                <option value="/?country=Brazil&state=Ceará&city=Fortaleza" th:selected="${city == 'Fortaleza'}">Fortaleza</option>
+                <option value="/?country=Brazil&state=Piauí&city=Teresina" th:selected="${city == 'Teresina'}">Teresina</option>
+                <option value="/?country=Brazil&state=Tocantins&city=Palmas" th:selected="${city == 'Palmas'}">Palmas</option>
+                <option value="/?country=Brazil&state=Espírito Santo&city=Vitória" th:selected="${city == 'Vitoria'}">Vitória</option>
+                <option value="/?country=Brazil&state=Santa Catarina&city=Florianópolis" th:selected="${city == 'Florianópolis'}">Florianópolis</option>
+                <option value="/?country=Brazil&state=Distrito Federal&city=Brasília" th:selected="${city == 'Brasília'}">Brasília</option>
+            </select>
+        </div>
+    </header>
+
+    <main class="flex mr-2">
+        <aside class="px-6 py-2 min-h-full min-w-64">
+            <ul>
+                <li class="flex mb-2 align-center rounded-md bg-blue-950 p-2 text-blue-500"><i data-lucide="house"
+                        class="w-4 h-4 mt-1"></i><a href="#"
+                        class="font-semibold ml-2 text-base text-blue-500">Início</a></li>
+                <li class="flex mb-2 align-center p-2"><i data-lucide="star" class="w-4 h-4 mt-1"></i><a href="#"
+                        class="font-semibold ml-2 text-gray-400 text-base">Favoritas</a></li>
+            </ul>
+        </aside>
+
+        <div class="min-h-full flex-1 bg-gray-950">
+            <section class="min-w-full bg-cover bg-center min-h-80 rounded-md"
+                th:style="'background-image: url(' + @{/imgs/banner_bh.png} + ');'">
+                <div class="pt-8 pl-8">
+                    <h2 class="text-3xl font-extrabold">Rádios de</h2>
+                    <h2 class="text-5xl font-bold text-blue-600" th:text="${city}"></h2>
+                    <p class="mt-5"
+                    th:utext="'Ouça as principais rádios da capital de ' + ${state} + ',<br>com qualidade e praticidade, direto do seu navegador.'">
+                    </p>
+                </div>
+            </section>
+
+            <section class="min-w-full">
+                <div class="flex ml-4 mt-4 align-center">
+                    <i data-lucide="tally-1" class="text-blue-700"></i>
+                    <h2 class="text-xl font-semibold">Rádios em destaque</h2>
+                </div>
+                <div class="flex p-2 justify-center gap-2 mx-4 mt-2">
+                    <div th:each="station, iterStat : ${stations}" th:if="${iterStat.index <= 6}"
+                        class="rounded-md bg-cover bg-center w-40 h-40 flex flex-col justify-end p-2 text-white"
+                        th:style="'background-image: linear-gradient(to top, rgba(0,0,0,0.8), transparent), url(' + ${station.favicon} + ');'">
+                        <div class="flex justify-between">
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="circle" class="w-2 h-2 fill-red-700 text-red-700"></i>
+                                <p class="ml-1"> Ao vivo</p>
+                            </div>
+                            <div class="audio-container">
+                                <audio th:src="${station.url}" class="hidden"></audio>
+                                <button type="button" onclick="toggleAudio(this)"
+                                    class="bg-blue-600 hover:bg-blue-700 p-1 rounded-full">
+                                    <i data-lucide="play" class="w-3 h-3"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="min-w-full mb-4">
+                <div class="flex ml-4 mt-4 align-center">
+                    <i data-lucide="tally-1" class="text-blue-700"></i>
+                    <h2 class="text-xl font-semibold">Todas as rádios</h2>
+                </div>
+                <div class="grid grid-cols-2 gap-2 flex-1 px-4 mt-2">
+                    <div th:each="station : ${stations}" class="radio-station rounded-md flex justify-between p-2 bg-slate-950 mx-3">
+                        <div class="flex items-center gap-2">
+                            <img th:src="${station.favicon}" th:alt="Favicon" onerror="this.onerror=null; this.src='/imgs/aradio.webp';"
+                                class="w-10 h-10 rounded-md object-cover" />
+                            <p th:text="${station.name}" class="text-sm"></p>
+                        </div>
+                        <div class="flex gap-5">
+                            <div class="flex items-center gap-1">
+                                <i data-lucide="circle" class="w-2 h-2 fill-red-700 text-red-700"></i>
+                                <p class="ml-1"> Ao vivo</p>
+                            </div>
+                            <div class="audio-container">
+                                <audio th:src="${station.url}" class="hidden"></audio>
+                                <button type="button" onclick="toggleAudio(this)"
+                                    class="bg-blue-600 hover:bg-blue-700 p-2 rounded-full">
+                                    <i data-lucide="play" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+    <script>
+        function toggleAudio(button) {
+            const audio = button.previousElementSibling;
+            const icon = button.querySelector("svg");
+
+            if (audio.paused) {
+                audio.play();
+                icon.setAttribute("data-lucide", "pause");
+            } else {
+                audio.pause();
+                icon.setAttribute("data-lucide", "play");
+            }
+            lucide.createIcons();
+        }
+        lucide.createIcons();
+    </script>
+    <script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>
